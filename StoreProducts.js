@@ -1,15 +1,3 @@
-// The data is the available inventory in the store. In the store you have various products with their price and available quantity.
-// Based on this data, write a function to generate the total bill of a grocery list given by an user
-// getTotalAmount([
-//     { item: 'Jam - Apricot', quantity: 2 },
-//     { item: 'Creamers - 10%', quantity:1 },
-//   ]); // The result would be (94.11 * 2) + (1 * 49.54)
-// Please note if the user wants an quantity above what the store has. You should account for the quantity the store has. 
-//For example if the user wants 4 quantity but the store has only 2, 
-//then your calculation should only account for 2
-
-// import storeProductList from "./StoreProducts"
-
 const storeProductList = [
     {"sku":1,"price":"$94.11","product":"Jam - Apricot","Quantity":2},
     {"sku":2,"price":"$13.47","product":"Sauce - Sesame Thai Dressing","Quantity":17},
@@ -113,44 +101,4 @@ const storeProductList = [
     {"sku":100,"price":"$70.68","product":"Tea - Herbal Sweet Dreams","Quantity":1}
 ];
 
-const userSelectedItemList =
-   [
-        { item: 'Jam - apricot', quantity: 2 },
-        { item: 'Creamers - 10%', quantity:1 },
-        { item: 'Jam - Apricot', quantity: -2 }
-   ];
-
-   
-function getTotalBillOfGroceryList(storeProductList,userSelectedItemList){
-    
-    //type and length check
-    if(!Array.isArray(storeProductList) || !Array.isArray(userSelectedItemList) || storeProductList.length === 0 || userSelectedItemList.length === 0){
-        console.error("Invalid storeProductList or userSelectedItemList");
-        return false;
-    }
-
-
-    let total=0; // total bill
-
-    const jsonObject = userSelectedItemList.map(JSON.stringify);
-    const uniqueItemSet = new Set(jsonObject);
-    const uniqueItemArray = Array.from(uniqueItemSet).map(JSON.parse);
-
-    console.log("====== Selected Items =====")
- 
-    uniqueItemArray.map((selectedItem) => {
-        const groceryItem = storeProductList.find((item) => item.product === selectedItem.item);
-
-        if (groceryItem  && typeof selectedItem.quantity === "number" && parseInt(selectedItem.quantity) > 0) {
-            const availableQuantity = Math.min(groceryItem.Quantity, selectedItem.quantity);
-            let productPrice = parseFloat(groceryItem.price.replace('$','')); 
-            total += productPrice * availableQuantity;
-        }
-    });
-    return total;
-}
-
-
-console.log("Total : $" ,getTotalBillOfGroceryList(storeProductList,userSelectedItemList));
-
-
+export default storeProductList;
